@@ -1,19 +1,28 @@
 # Use a Maven image to build the application
-FROM maven:3.8.8-openjdk-17 AS builder
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
 
 # Set working directory inside the container
 WORKDIR /app
 
-# Copy the project files
+# Copy pom.xml first (to leverage Docker caching)
+COPY pom.xml .
+
+# List files (debugging step)
+RUN ls -l /app
+
+# Download dependencies separately to optimize caching
+RUN mvn dependency:go-offline
+
+# Copy the entire project (including the src folder)
 COPY . .
 
-# Ensure the Maven wrapper has execute permissions
-RUN chmod +x mvnw
+# List files again (debugging step)
+RUN ls -l /app
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Use a minimal runtime image
+# Use a minimal runtime image for running the app
 FROM openjdk:17-jdk-slim
 
 # Set working directory inside the container
