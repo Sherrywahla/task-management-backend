@@ -1,14 +1,14 @@
-# Use an official OpenJDK image as a builder
-FROM openjdk:17-jdk-slim AS builder
+# Use Maven image to build the application
+FROM maven:3.8.8-openjdk-17 AS builder
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
 # Copy the project files
 COPY . .
 
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Use a minimal runtime image
 FROM openjdk:17-jdk-slim
