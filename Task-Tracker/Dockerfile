@@ -1,5 +1,5 @@
-# Use a Maven image to build the application
-FROM maven:3.8.8-openjdk-17 AS builder
+# Use a Maven image with Java 17
+FROM maven:3.8.8-eclipse-temurin-17 AS builder
 
 # Set working directory inside the container
 WORKDIR /app
@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy the project files
 COPY . .
 
-# Build the application using Maven (not mvnw)
+# Build the application using Maven
 RUN mvn clean package -DskipTests
 
 # Use a minimal runtime image
