@@ -4,13 +4,13 @@ FROM eclipse-temurin:17 AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy project files, but only if they exist
+# Copy all project files
 COPY . .
 
-# Ensure Maven Wrapper is executable
-RUN test -f mvnw && chmod +x mvnw
+# Ensure the Maven Wrapper exists before making it executable
+RUN if [ -f mvnw ]; then chmod +x mvnw; else echo "mvnw not found, failing build"; exit 1; fi
 
-# Build the application
+# Build the application using Maven Wrapper if available, otherwise system Maven
 RUN ./mvnw clean package -DskipTests || mvn clean package -DskipTests
 
 # Use a minimal runtime image
