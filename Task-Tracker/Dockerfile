@@ -1,13 +1,14 @@
-# Use an official OpenJDK runtime as a parent image
+# Use an official OpenJDK image
 FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
+# Set working directory inside the container
 WORKDIR /app
 
-# Copy the JAR file to the container
+# Copy the JAR file into the container
 COPY target/Task-Tracker-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port your Spring Boot app runs on
+
+# Expose the port your Spring Boot app uses
 EXPOSE 8080
 
 # Run the application
