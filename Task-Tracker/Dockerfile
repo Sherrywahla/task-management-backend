@@ -1,26 +1,28 @@
-# Use an official OpenJDK image as a builder
-FROM openjdk:17-jdk-slim AS builder
+# Use an official Java runtime as the base image
+FROM eclipse-temurin:17 AS builder
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the project files
+# Copy all project files
 COPY . .
+
+# Ensure Maven Wrapper is executable
+RUN chmod +x mvnw
 
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
 # Use a minimal runtime image
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17 AS runtime
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Copy the built JAR file from the builder stage
-COPY --from=builder /app/target/Task-Tracker-0.0.1-SNAPSHOT.jar app.jar
+# Copy only the built JAR from the builder stage
+COPY --from=builder /app/target/*.jar app.jar
 
-# Expose the port your Spring Boot app uses
+# Expose the application port (change if needed)
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
