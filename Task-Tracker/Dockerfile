@@ -4,22 +4,14 @@ FROM eclipse-temurin:17 AS builder
 # Set working directory
 WORKDIR /app
 
-# Copy only essential files first (to leverage Docker caching)
-COPY mvnw mvnw
-COPY .mvn .mvn
-COPY pom.xml .
-
-# Ensure Maven Wrapper is executable
-RUN chmod +x mvnw
-
-# Download dependencies first for better caching
-RUN ./mvnw dependency:go-offline
-
-# Copy the rest of the project
+# Copy project files, but only if they exist
 COPY . .
 
+# Ensure Maven Wrapper is executable
+RUN test -f mvnw && chmod +x mvnw
+
 # Build the application
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests || mvn clean package -DskipTests
 
 # Use a minimal runtime image
 FROM eclipse-temurin:17 AS runtime
