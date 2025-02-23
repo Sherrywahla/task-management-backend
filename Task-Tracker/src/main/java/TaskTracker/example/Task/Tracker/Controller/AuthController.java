@@ -1,9 +1,14 @@
 package TaskTracker.example.Task.Tracker.Controller;
 
+import TaskTracker.example.Task.Tracker.Exception.UserAlreadyExistsException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
 import TaskTracker.example.Task.Tracker.DTO.LoginRequest;
 import TaskTracker.example.Task.Tracker.DTO.SignupRequest;
 import TaskTracker.example.Task.Tracker.Service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +31,12 @@ public class AuthController {
             String message = authService.registerUser(request);
             response.put("message", message);
             return ResponseEntity.ok(response);
+        } catch (UserAlreadyExistsException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
-            response.put("error", "Signup failed: " + e.getMessage());
-            return ResponseEntity.status(500).body(response);
+            response.put("error", "Signup failed due to an internal error");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 

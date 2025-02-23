@@ -1,4 +1,6 @@
 package TaskTracker.example.Task.Tracker.Service;
+import TaskTracker.example.Task.Tracker.Exception.UserAlreadyExistsException;
+
 
 import TaskTracker.example.Task.Tracker.DTO.LoginRequest;
 import TaskTracker.example.Task.Tracker.DTO.SignupRequest;
