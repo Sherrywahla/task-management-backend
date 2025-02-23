@@ -21,11 +21,17 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Map<String, String>> register(@RequestBody SignupRequest request) {
-        String message = authService.registerUser(request);
         Map<String, String> response = new HashMap<>();
-        response.put("message", message);
-        return ResponseEntity.ok(response);
+        try {
+            String message = authService.registerUser(request);
+            response.put("message", message);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("error", "Signup failed: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
     }
+
 
 
     @PostMapping("/login")
