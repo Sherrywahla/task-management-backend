@@ -53,18 +53,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-
-
-        configuration.setAllowedOrigins(List.of(
-                "https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app",
-                "https://task-management-frontend-be9ao9ubp-sherrywahlas-projects.vercel.app",
-                "http://localhost:3000"
-        ));
-
+        configuration.setAllowedOriginPatterns(List.of("https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
