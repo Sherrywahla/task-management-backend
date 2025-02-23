@@ -5,15 +5,14 @@ import TaskTracker.example.Task.Tracker.DTO.SignupRequest;
 import TaskTracker.example.Task.Tracker.Service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = {
-        "https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app",
-        "http://localhost:3000"
-})
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -27,6 +26,7 @@ public class AuthController {
         response.put("message", message);
         return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
