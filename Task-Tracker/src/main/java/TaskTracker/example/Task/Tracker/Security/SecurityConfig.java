@@ -54,7 +54,6 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedOrigins(List.of(
                 "https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app",
                 "https://task-management-frontend-be9ao9ubp-sherrywahlas-projects.vercel.app",
@@ -68,6 +67,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
