@@ -53,7 +53,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app"));
+        configuration.setAllowedOriginPatterns(List.of("https://task-management-frontend-git-main-sherrywahlas-projects.vercel.app","https://task-management-frontend-41qr3vjy5-sherrywahlas-projects.vercel.app"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization"));
