@@ -1,8 +1,7 @@
 package TaskTracker.example.Task.Tracker.Controller;
 
 import TaskTracker.example.Task.Tracker.Exception.UserAlreadyExistsException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+
 
 import TaskTracker.example.Task.Tracker.DTO.LoginRequest;
 import TaskTracker.example.Task.Tracker.DTO.SignupRequest;
@@ -35,7 +34,7 @@ public class AuthController {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
-            e.printStackTrace(); // 🔥 Print full error in logs
+            e.printStackTrace();
             response.put("error", "Signup failed due to an internal error");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
