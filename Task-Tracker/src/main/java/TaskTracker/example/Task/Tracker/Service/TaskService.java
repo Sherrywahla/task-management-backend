@@ -64,5 +64,17 @@ public class TaskService {
 
         taskRepository.delete(task);
     }
+    public Task getTaskById(Long id, String username, boolean isAdmin) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!isAdmin && !task.getUser().getEmail().equals(username)) {
+            throw new RuntimeException("Access denied! You do not own this task.");
+        }
+
+        return task;
+    }
+
+
 
 }

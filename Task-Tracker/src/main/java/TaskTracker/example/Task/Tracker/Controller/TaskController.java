@@ -43,6 +43,16 @@ public class TaskController {
         taskService.deleteTask(id, userDetails.getUsername(), isAdmin);
         return ResponseEntity.ok("Task deleted successfully!");
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id,
+                                            @AuthenticationPrincipal UserDetails userDetails) {
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        Task task = taskService.getTaskById(id, userDetails.getUsername(), isAdmin);
+        return ResponseEntity.ok(task);
+    }
+
 
 
 }
