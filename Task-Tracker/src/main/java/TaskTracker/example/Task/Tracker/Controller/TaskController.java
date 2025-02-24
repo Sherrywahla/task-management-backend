@@ -43,4 +43,6 @@ public class TaskController {
         taskService.deleteTask(id, userDetails.getUsername(), isAdmin);
         return ResponseEntity.ok("Task deleted successfully!");
     }
+
+
 }

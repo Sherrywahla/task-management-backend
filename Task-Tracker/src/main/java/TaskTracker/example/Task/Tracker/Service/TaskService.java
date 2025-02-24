@@ -35,6 +35,12 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
+        if (task.getUser() == null) {
+            throw new RuntimeException("Task owner is null");
+        }
+
+        System.out.println("Task belongs to: " + task.getUser().getEmail());
+
         if (!task.getUser().getEmail().equals(userEmail)) {
             throw new RuntimeException("Unauthorized to update this task");
         }
@@ -47,6 +53,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+
     public void deleteTask(Long id, String userEmail, boolean isAdmin) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
@@ -57,4 +64,5 @@ public class TaskService {
 
         taskRepository.delete(task);
     }
+
 }

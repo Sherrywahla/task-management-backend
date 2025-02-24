@@ -35,10 +35,12 @@ public class AuthController {
             response.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         } catch (Exception e) {
+            e.printStackTrace(); // 🔥 Print full error in logs
             response.put("error", "Signup failed due to an internal error");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
 
 
 
